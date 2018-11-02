@@ -1,0 +1,48 @@
+[
+    {
+        "id": 1,
+        "title": "主页1",
+        "parentid": 0,
+        "url": "/"
+    },{
+        "id": 2,
+        "title": "主页2",
+        "parentid": 0,
+        "url": "/index2"
+    },{
+        "id": 3,
+        "title": "主页3",
+        "parentid": 0,
+        "url": "/"
+    },{
+        "id": 4,
+        "title": "副业1",
+        "parentid": 1,
+        "url": "/"
+    },{
+        "id": 5,
+        "title": "副业2",
+        "parentid": 1,
+        "url": "/3"
+    },{
+        "id": 6,
+        "title": "三级页1",
+        "parentid": 4,
+        "url": "/1"
+    },{
+        "id": 7,
+        "title": "三级页2",
+        "parentid": 4,
+        "url": "/2"
+    },{
+        "id": 8,
+        "title": "2级页",
+        "parentid": 3,
+        "url": "/"
+    },{
+        "id": 9,
+        "title": "3级页",
+        "parentid": 8,
+        "url": "/5"
+    }
+]
