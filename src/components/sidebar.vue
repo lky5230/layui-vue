@@ -279,7 +279,7 @@ export default {
         position: relative;
         padding-left: 45px;
         padding-right: 30px;
-        transition: color .3s;
+        transition: color .3s, background .3s;
         display: block;
         outline: none;
         &:hover{

@@ -121,6 +121,8 @@ export default {
     box-shadow: 0px 2px 4px #dfdfdf;
     display: flex;
     align-items: center;
+    position: relative;
+    z-index: 13;
     .pagetab-left,
     .pagetab-home,
     .pagetab-right {
