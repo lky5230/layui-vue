@@ -1,10 +1,11 @@
 <template>
     <div class="pagetab">
-        <div class="pagetab-left" @click="tabToRight">
-            <i class="fa fa-angle-double-left"></i>
-        </div>
-        <div class="pagetab-home" :class="{'router-active': $route.path == '/'}" @click.stop="$router.push('/')">
-            <i class="fa fa-home"></i>
+        <div class="pagetab-left" @click="tabToRight"></div>
+        <div 
+            class="pagetab-home" 
+            title="首页" 
+            :class="{'router-active': $route.path == '/'}" 
+            @click.stop="$router.push('/')">
         </div>
         <div class="pagetab-main">
             <div 
@@ -23,9 +24,7 @@
                     </div>
             </div>
         </div>
-        <div class="pagetab-right" @click="tabToLeft">
-            <i class="fa fa-angle-double-right"></i>
-        </div>
+        <div class="pagetab-right" @click="tabToLeft"></div>
 
     </div>
 </template>
@@ -123,8 +122,8 @@ export default {
     align-items: center;
     position: relative;
     z-index: 13;
-    .pagetab-left,
     .pagetab-home,
+    .pagetab-left,
     .pagetab-right {
         flex: none;
         width: 40px;
@@ -136,11 +135,21 @@ export default {
         font-size: 18px;
         &:hover,
         &.router-active{
-            background: #f6f6f6;
+            background-color: #f6f6f6;
         }
+    }
+    .pagetab-home{
+        background: url(../assets/home.png) no-repeat center center;
+        background-size: 18px 18px;
+    }
+    .pagetab-left{
+        background: url(../assets/left.png) no-repeat center center;
+        background-size: 24px 24px;
     }
     .pagetab-right{
         border-left: 1px solid #f6f6f6;
+        background: url(../assets/right.png) no-repeat center center;
+        background-size: 24px 24px;
     }
     .pagetab-main{
         flex: auto;
@@ -172,27 +181,27 @@ export default {
                     right: 7px;
                     top: 50%;
                     transform: translateY(-50%);
-                    width: 14px;
-                    height: 14px;
+                    width: 16px;
+                    height: 16px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     background: url(../assets/close.png) no-repeat center center;
-                    background-size: contain;
+                    background-size: 14px 14px;
                     &:hover{
                         background: url(../assets/close-active.png) no-repeat center center;
                         background-size: contain;
                     }
                 }
                 &.router-active{
-                    background: #f6f6f6;
+                    background-color: #f6f6f6;
                     &:before{
                         width: calc(100% - 2px);
                     }
                 }
                 &:hover{
                     cursor: pointer;
-                    background: #f6f6f6;
+                    background-color: #f6f6f6;
                     &:before{
                         width: calc(100% - 2px);
                     }
@@ -213,13 +222,14 @@ export default {
     .pagetab-home{
         position: relative;
         &.router-active{
-            background: #f6f6f6;
+            background-color: #f6f6f6;
             &:before{
                 width: calc(100% - 2px);
             }
         }
         &:hover{
-            cursor: pointer;background: #f6f6f6;
+            cursor: pointer;
+            background-color: #f6f6f6;
             &:before{
                 width: calc(100% - 2px);
             }

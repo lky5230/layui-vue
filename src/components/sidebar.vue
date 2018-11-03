@@ -2,7 +2,7 @@
     <!-- 侧边栏：最多3级 -->
     <div>
       <div class="sidebar" :style="{left: $store.state.showSidebarLeft? '0px': '-220px'}">
-          <div class="sidebar-title nowrap">ADMIN</div>
+          <div class="sidebar-title nowrap"></div>
           <div 
               class="sidebar-list" 
               @click.stop
@@ -221,6 +221,8 @@ export default {
 
 
 <style lang="less">
+@indicatorColor: #0487c3;
+@sidebarActiveBg: #0487c3;
 @media screen and (max-width: 768px) {
   .sidebar{
     position: fixed;
@@ -259,7 +261,8 @@ export default {
     font-size: 16px;
     padding-left: 20px;
     padding-right: 20px;
-    background: rgb(202, 75, 2);
+    background: url(../assets/title.jpg) no-repeat left top;
+    background-size: 100% 100%;
     color: #fff;
     text-align: center;
   }
@@ -272,7 +275,7 @@ export default {
     .wraper{
       position: relative;
       .router-active{
-        background: rgb(202, 75, 2) !important;
+        background: @sidebarActiveBg !important;
         color: #fff;
       }
       .listItem, .listItem2, .listItem3{
@@ -323,7 +326,7 @@ export default {
       position: absolute;
       left: 0px;
       width: 5px;
-      background: rgb(202, 75, 2);
+      background: @indicatorColor;
       transition: all .2s;
       transform-origin: center center;
       transform: scaleY(0.9);
