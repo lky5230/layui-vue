@@ -67,14 +67,15 @@ export default {
     top: 0px;
     width: 20%;
     height: 2px;
-    background: #a9a9a9;
+    background: #ffa180;
     z-index: 99;
-    animation: loading .8s linear infinite normal;
+    left: -20%;
+    animation: loading .75s 1s linear infinite normal;
   }
 }
 @keyframes loading {
   0%{
-    left: -150px;
+    left: -20%;
   }
   100%{
     left:100%;
