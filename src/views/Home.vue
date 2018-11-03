@@ -56,7 +56,7 @@ export default {
     position: absolute;
     top: 1px;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 3px);
     background: rgba(0, 0, 0, .03);
     z-index: 98;
     left: 0px;
