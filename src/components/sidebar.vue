@@ -223,6 +223,8 @@ export default {
 <style lang="less">
 @indicatorColor: #0487c3;
 @sidebarActiveBg: #0487c3;
+@sidebarMainBg: #20222a;
+@sidebarChildBg: #070a15;
 @media screen and (max-width: 768px) {
   .sidebar{
     position: fixed;
@@ -252,7 +254,7 @@ export default {
   width: 220px;
   transition: left .3s;
   height: 100vh;
-  background: #20222a;
+  background: @sidebarMainBg;
   color: rgba(255, 255, 255, .7);
 
   .sidebar-title{
@@ -275,12 +277,11 @@ export default {
     .wraper{
       position: relative;
       .router-active{
-        background: @sidebarActiveBg !important;
+        background-color: @sidebarActiveBg !important;
         color: #fff;
       }
       .listItem, .listItem2, .listItem3{
         position: relative;
-        padding-left: 45px;
         padding-right: 30px;
         transition: color .3s, background .3s;
         display: block;
@@ -300,7 +301,8 @@ export default {
       .listItem{
         height: 56px;
         line-height: 56px;
-        background: #20222a;
+        padding-left: 45px;
+        background: @sidebarMainBg;
         .listItem-icon{
           position: absolute;
           left: 20px;
@@ -312,13 +314,18 @@ export default {
       .listItem2{
         height: 40px;
         line-height: 40px;
-        background: #16181d;
+        padding-left: 60px;
+        background: url(../assets/expand.png) no-repeat 42px 12px;
+        background-size: 14px 14px;
+        background-color: @sidebarChildBg;
       }
       .listItem3{
         height: 40px;
         line-height: 40px;
-        padding-left: 60px;
-        background: #16181d;
+        padding-left: 75px;
+        background: url(../assets/expand.png) no-repeat 60px 12px;
+        background-size: 14px 14px;
+        background-color: @sidebarChildBg;
       }
           
     }

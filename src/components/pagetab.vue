@@ -167,8 +167,8 @@ export default {
                 width: 120px;
                 position: absolute;
                 top: 0px;
-                padding-left: 15px;
-                padding-right: 26px;
+                padding-left: 12px;
+                padding-right: 24px;
                 height: 40px;
                 border-right: none;
                 line-height: 40px;
