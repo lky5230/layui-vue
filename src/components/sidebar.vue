@@ -323,7 +323,7 @@ export default {
         height: 40px;
         line-height: 40px;
         padding-left: 75px;
-        background: url(../assets/expand.png) no-repeat 60px 12px;
+        background: url(../assets/expand.png) no-repeat 58px 12px;
         background-size: 14px 14px;
         background-color: @sidebarChildBg;
       }
