@@ -6,6 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   state: {
+    // 后置路由时为false，后置路由时为true，用于loading判定
+    complateRoute: false,
     // 刷新spa 动态标记
     refreshMark: 0,
     // tab标签页列表
@@ -18,6 +20,11 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    // 进入前置还是后置路由
+    complateRouteMul(state, payload){
+      state.complateRoute = payload;
+    },
+
     // 点击刷新spa按钮的 改变标记
     refreshMarkMut(state, payload){
       state.refreshMark = Date.now() + '@' + router.currentRoute.name;

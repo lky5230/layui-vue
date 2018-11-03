@@ -4,7 +4,12 @@
     <div class="main">
       <header-top />
       <pagetab />
-      <div class="spa">
+      <div 
+        class="spa" 
+        :style="{'overflow-y': $store.state.complateRoute? 'auto': 'hidden'}">
+        <div v-show="!$store.state.complateRoute" class="loading-wrap">
+          <div class="loading"></div>
+        </div>
         <keep-alive>
           <router-view />
         </keep-alive>
@@ -44,8 +49,36 @@ export default {
   padding: 10px;
   box-sizing: border-box;
   height: calc(100vh - 90px);
-  overflow-y: auto;
   background: #f2f2f2;
+  position: relative;
+  
+  .loading-wrap{
+    position: absolute;
+    top: 1px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .03);
+    z-index: 98;
+    left: 0px;
+    overflow: hidden;
+  }
+  .loading{
+    position: absolute;
+    top: 0px;
+    width: 20%;
+    height: 2px;
+    background: #a9a9a9;
+    z-index: 99;
+    animation: loading .8s linear infinite normal;
+  }
+}
+@keyframes loading {
+  0%{
+    left: -150px;
+  }
+  100%{
+    left:100%;
+  }
 }
 </style>
 

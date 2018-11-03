@@ -20,6 +20,7 @@
                     class="listItem nowrap" 
                     @click.stop="collapsible(menuItem)"
                     :class="{'router-active': $route.path == menuItem.url && menuItem._isleaf != 0}"
+                    :title="menuItem.title"
                     :ref="'menuItem'+menuItem.id">
                     <i class="fa fa-home listItem-icon"></i>
                     {{menuItem.title}}
@@ -48,6 +49,7 @@
                   <a 
                       class="listItem2 nowrap"
                       @click.stop="collapsible(menuItem2)"
+                      :title="menuItem2.title"
                       :class="{'router-active': $route.path == menuItem2.url && menuItem2._isleaf != 0}">
                       {{menuItem2.title}}
                       <transition name="arrow">
@@ -75,6 +77,7 @@
                       <a 
                         class="listItem3 nowrap"
                         @click.stop="collapsible(menuItem3)"
+                        :title="menuItem3.title"
                         :class="{'router-active': $route.path == menuItem3.url && menuItem3._isleaf != 0}">
                         {{menuItem3.title}}
                       </a>
@@ -283,7 +286,7 @@ export default {
       .listItem, .listItem2, .listItem3{
         position: relative;
         padding-right: 30px;
-        transition: color .3s, background .3s;
+        transition: color .3s;
         display: block;
         outline: none;
         &:hover{

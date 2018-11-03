@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store.js'
 Vue.use(Router)
 
 let router = new Router({
@@ -34,13 +35,17 @@ let router = new Router({
   ]
 })
 
-//路由守卫
+//路由前置守卫
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    next()
-  } else {
-    next()
-  }
+  store.commit('complateRouteMul', false);
+  // ...
+  next();
+});
+
+//路由后置路由
+router.afterEach((to, from) => {
+  store.commit('complateRouteMul', true);
+  // ...
 });
 
 export default router;
