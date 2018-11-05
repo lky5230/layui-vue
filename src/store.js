@@ -6,15 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   state: {
-    // 后置路由时为false，后置路由时为true，用于loading判定
+    // 后置路由时为false，后置路由时为true，可用于loading判定
     complateRoute: false,
-    // 刷新spa 动态标记
+    // 头部点刷新时，触发对应路由组件响应的动态标记
     refreshMark: 0,
     // tab标签页列表
     pagetab: [],
     // 改变sidebar的left状态
     showSidebarLeft: false,
-    //增加或切换标签页时，移动到合适位置 动态标记
+    //增加或切换标签页时，移动标签页到合适位置时的动态名称
     tabToPos: '',
 
   },
@@ -25,7 +25,7 @@ export default new Vuex.Store({
       state.complateRoute = payload;
     },
 
-    // 点击刷新spa按钮的 改变标记
+    // 点击头部刷新
     refreshMarkMut(state, payload){
       state.refreshMark = Date.now() + '@' + router.currentRoute.name;
     },

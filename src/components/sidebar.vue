@@ -218,8 +218,8 @@ export default {
           }
         }
       }(menu));
-
-      if(curPid == 'FIRST') return this.menu = menu;
+      
+      if(curPid == 'FIRST' || curPid == '') return this.menu = menu;
 
       //2、侧边栏展开当前标签页的所有父层标签
       let willFindPid = curPid;

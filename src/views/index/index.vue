@@ -13,8 +13,8 @@ export default {
         
     },
     methods: {
-        refresh(name){
-            if(name == 'index'){
+        refresh(routeName){
+            if(routeName == 'index'){
                 console.log('index  refresh')
             }
         }
