@@ -220,7 +220,7 @@ Vue.prototype.$utils = {
   },
 
   //扁平化cleanData，可用于搜索菜单
-  flattenedCleanData(menu, name = 'name'){
+  flattenedCleanData(menu, name = 'title'){
     let arr = [],
       temp = [], 
       endIndex = 0;

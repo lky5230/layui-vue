@@ -50,7 +50,8 @@
                       class="listItem2 nowrap"
                       @click.stop="collapsible(menuItem2)"
                       :title="menuItem2.title"
-                      :class="{'router-active': $route.path == menuItem2.url && menuItem2._isleaf != 0}">
+                      :class="{'router-active': $route.path == menuItem2.url && menuItem2._isleaf != 0}"
+                      :style="{'background-size': menuItem2._isleaf == 0? '14px': '0px'}">
                       {{menuItem2.title}}
                       <transition name="arrow">
                       <i 
@@ -78,7 +79,8 @@
                         class="listItem3 nowrap"
                         @click.stop="collapsible(menuItem3)"
                         :title="menuItem3.title"
-                        :class="{'router-active': $route.path == menuItem3.url && menuItem3._isleaf != 0}">
+                        :class="{'router-active': $route.path == menuItem3.url && menuItem3._isleaf != 0}"
+                        :style="{'background-size': menuItem3._isleaf == 0? '14px': '0px'}">
                         {{menuItem3.title}}
                       </a>
                   </div>
@@ -197,15 +199,18 @@ export default {
       this.sidebarIndicator = true;
     },
 
-    //初始化 pagetab
+    //初始化 pagetab、菜单展开等
     initPageTab(){
       let path = this.$router.currentRoute.path;
-      let menu = this.menu;
+      let menu = this.$utils.jsonClone(this.menu);
       let vm = this;
+      let curPid = '';
+      //1、pagetab 插入当前标签页
       (function exec(menu){
         for(let i=0; i<menu.length; i++){
           if(menu[i]._isleaf != 0){
             if(path == menu[i].url){
+              curPid = menu[i].parentid == 0? 'FIRST': menu[i].parentid;
               return vm.$store.commit('pagetabAction', {action: 'insert', data: menu[i]});
             }
           }else{
@@ -213,6 +218,32 @@ export default {
           }
         }
       }(menu));
+
+      if(curPid == 'FIRST') return this.menu = menu;
+
+      //2、侧边栏展开当前标签页的所有父层标签
+      let willFindPid = curPid;
+      let findComplate = false;
+      function exec2(menu){
+        for(let i=0; i<menu.length; i++){
+          if(menu[i].id == willFindPid){
+            menu[i]._showChild = true;
+            if(menu[i].parentid == 0){
+              return findComplate = true;
+            }else{
+              return willFindPid = menu[i].parentid;
+            }
+          }else{
+            if(menu[i]._isleaf == 0){
+              exec2(menu[i]._child);
+            }
+          }
+        }
+      }
+      while(!findComplate){
+        exec2(menu);
+      }
+      this.menu = menu;
     },
     
 
