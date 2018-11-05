@@ -22,7 +22,7 @@
                     :class="{'router-active': $route.path == menuItem.url && menuItem._isleaf != 0}"
                     :title="menuItem.title"
                     :ref="'menuItem'+menuItem.id">
-                    <i class="fa fa-home listItem-icon"></i>
+                    <i class="fa listItem-icon" :class="[menuItem.icon? menuItem.icon: 'fa-home']"></i>
                     {{menuItem.title}}
                     <transition name="arrow">
                         <i 
@@ -42,48 +42,48 @@
 
                   <!-- 2级 -->
                   <div 
-                  v-if="menuItem._isleaf == 0" 
-                  v-for="menuItem2 in menuItem._child" 
-                  v-show="menuItem._showChild"
-                  :key="menuItem2.id">
-                  <a 
-                      class="listItem2 nowrap"
-                      @click.stop="collapsible(menuItem2)"
-                      :title="menuItem2.title"
-                      :class="{'router-active': $route.path == menuItem2.url && menuItem2._isleaf != 0}"
-                      :style="{'background-size': menuItem2._isleaf == 0? '14px': '0px'}">
-                      {{menuItem2.title}}
-                      <transition name="arrow">
-                      <i 
-                          v-if="menuItem2._isleaf == 0" 
-                          v-show="!menuItem2._showChild"
-                          class="fa fa-caret-down listItem-arrow">
-                      </i>
-                      </transition>
-                      <transition name="arrow">
-                      <i 
-                          v-if="menuItem2._isleaf == 0" 
-                          v-show="menuItem2._showChild"
-                          class="fa fa-caret-up listItem-arrow">
-                      </i>
-                      </transition>
-                  </a>
+                    v-if="menuItem._isleaf == 0" 
+                    v-for="menuItem2 in menuItem._child" 
+                    v-show="menuItem._showChild"
+                    :key="menuItem2.id">
+                    <a 
+                        class="listItem2 nowrap"
+                        @click.stop="collapsible(menuItem2)"
+                        :title="menuItem2.title"
+                        :class="{'router-active': $route.path == menuItem2.url && menuItem2._isleaf != 0}"
+                        :style="{'background-size': menuItem2._isleaf == 0? '14px': '0px'}">
+                        {{menuItem2.title}}
+                        <transition name="arrow">
+                        <i 
+                            v-if="menuItem2._isleaf == 0" 
+                            v-show="!menuItem2._showChild"
+                            class="fa fa-caret-down listItem-arrow">
+                        </i>
+                        </transition>
+                        <transition name="arrow">
+                        <i 
+                            v-if="menuItem2._isleaf == 0" 
+                            v-show="menuItem2._showChild"
+                            class="fa fa-caret-up listItem-arrow">
+                        </i>
+                        </transition>
+                    </a>
 
-                  <!-- 3级 -->
-                  <div 
-                      v-if="menuItem2._isleaf == 0" 
-                      v-for="menuItem3 in menuItem2._child" 
-                      v-show="menuItem2._showChild"
-                      :key="menuItem3.id">
-                      <a 
-                        class="listItem3 nowrap"
-                        @click.stop="collapsible(menuItem3)"
-                        :title="menuItem3.title"
-                        :class="{'router-active': $route.path == menuItem3.url && menuItem3._isleaf != 0}"
-                        :style="{'background-size': menuItem3._isleaf == 0? '14px': '0px'}">
-                        {{menuItem3.title}}
-                      </a>
-                  </div>
+                    <!-- 3级 -->
+                    <div 
+                        v-if="menuItem2._isleaf == 0" 
+                        v-for="menuItem3 in menuItem2._child" 
+                        v-show="menuItem2._showChild"
+                        :key="menuItem3.id">
+                        <a 
+                          class="listItem3 nowrap"
+                          @click.stop="collapsible(menuItem3)"
+                          :title="menuItem3.title"
+                          :class="{'router-active': $route.path == menuItem3.url && menuItem3._isleaf != 0}"
+                          :style="{'background-size': menuItem3._isleaf == 0? '14px': '0px'}">
+                          {{menuItem3.title}}
+                        </a>
+                    </div>
 
                   </div>
 
@@ -92,14 +92,14 @@
               </div>
 
               <transition name="indicator">
-              <div 
+                <div 
                   class="indicator" 
                   v-show="sidebarIndicator" 
                   :style="{
                   top: sidebarIndicatorTop+'px', 
                   height: sidebarIndicatorHeight+'px'
                   }">
-              </div>
+                </div>
               </transition>
 
           </div>
@@ -255,34 +255,10 @@ export default {
 
 
 <style lang="less">
-@indicatorColor: #0487c3;
-@sidebarActiveBg: #0487c3;
+@indicatorColor: #4caf50;
+@sidebarActiveBg: #f2f2f2;
 @sidebarMainBg: #20222a;
 @sidebarChildBg: #070a15;
-@media screen and (max-width: 768px) {
-  .sidebar{
-    position: fixed;
-    z-index: 1000;
-    top: 0px;
-  }
-  .mask{
-    position: fixed;
-    z-index: 999;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, .35);
-  }
-}
-@media screen and (min-width: 768px) {
-  .sidebar{
-    position: static;
-  }
-  .mask{
-    display: none;
-  }
-}
 .sidebar{
   flex: none;
   width: 220px;
@@ -312,12 +288,12 @@ export default {
       position: relative;
       .router-active{
         background-color: @sidebarActiveBg !important;
-        color: #fff;
+        color: @sidebarMainBg !important;
+        font-weight: bold !important;
       }
       .listItem, .listItem2, .listItem3{
         position: relative;
         padding-right: 30px;
-        transition: color .3s;
         display: block;
         outline: none;
         &:hover{
@@ -333,15 +309,18 @@ export default {
         }
       }
       .listItem{
-        height: 56px;
-        line-height: 56px;
+        height: 40px;
+        line-height: 40px;
         padding-left: 45px;
         background: @sidebarMainBg;
+        position: relative;
+        
         .listItem-icon{
           position: absolute;
           left: 20px;
           top: 50%;
-          font-size: 14px;
+          width: 14px;
+          height: 14px;
           transform: translateY(-50%);
         }
       }
@@ -365,12 +344,12 @@ export default {
     }
     .indicator{
       position: absolute;
-      left: 0px;
-      width: 5px;
+      left: 1px;
+      width: 3px;
       background: @indicatorColor;
       transition: all .2s;
       transform-origin: center center;
-      transform: scaleY(0.9);
+      transform: scaleY(0.7);
     }
   }
 
@@ -397,8 +376,29 @@ export default {
     transform: scaleY(0);
     opacity: 0;
   }
-  
-
 }
-
+@media screen and (max-width: 768px) {
+  .sidebar{
+    position: fixed;
+    z-index: 1000;
+    top: 0px;
+  }
+  .mask{
+    position: fixed;
+    z-index: 999;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .35);
+  }
+}
+@media screen and (min-width: 768px) {
+  .sidebar{
+    position: static;
+  }
+  .mask{
+    display: none;
+  }
+}
 </style>

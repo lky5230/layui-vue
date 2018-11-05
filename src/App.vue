@@ -7,6 +7,7 @@
 <style lang="less">
 #app {
   width: 100%;
+  background-color: #f2f2f2;
   height: 100%;
 }
 

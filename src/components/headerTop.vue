@@ -1,7 +1,7 @@
 <template>
     <div class="top clearfix">
         <div class="top-wrap fl">
-            <div class="item fl" @click="$store.commit('changeSidebarLeft')">
+            <div class="item fl menu-icon-left" @click="$store.commit('changeSidebarLeft')">
                 <i class="menu-icon"></i>
             </div>
             <div class="item fl" @click="$store.commit('refreshMarkMut')" title="刷新">
@@ -188,6 +188,11 @@ export default {
             background: url(../assets/tag.png) no-repeat center center;
             background-size: contain;
         }
+    }
+}
+@media screen and (min-width: 768px) {
+    .item.menu-icon-left{
+        display: none;
     }
 }
 </style>
