@@ -1,3 +1,5 @@
+![Image text](https://raw.githubusercontent.com/lky5230/layui-vue/master/demo.png)
+
 # admin
 
 ## Project setup
