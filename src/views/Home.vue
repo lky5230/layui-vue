@@ -34,6 +34,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@media screen and (max-width: 768px) {
+  .main{
+    max-width: 100%;
+  }
+}
+@media screen and (min-width: 768px) {
+  .main{
+    max-width: calc(100% - 220px);
+  }
+}
 .home{
   display: flex;
   width: 100%;
@@ -44,6 +54,7 @@ export default {
   flex: auto;
   background: #f2f2f2;
 }
+
 .spa{
   width: 100%;
   padding: 10px;
@@ -56,8 +67,8 @@ export default {
     position: absolute;
     top: 1px;
     width: 100%;
-    height: calc(100% - 3px);
-    background: rgba(0, 0, 0, .03);
+    height: calc(100% - 4px);
+    background: transparent;
     z-index: 98;
     left: 0px;
     overflow: hidden;
@@ -66,11 +77,11 @@ export default {
     position: absolute;
     top: 0px;
     width: 20%;
-    height: 2px;
-    background: #ffa180;
+    height: 3px;
+    background: #1196db;
     z-index: 99;
     left: -20%;
-    animation: loading .75s 1s linear infinite normal;
+    animation: loading .3s 1s cubic-bezier(0.285, 0.745, 0.735, 0.270) infinite normal;
   }
 }
 @keyframes loading {

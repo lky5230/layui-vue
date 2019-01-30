@@ -20,12 +20,15 @@
                         v-for="(pagetab, pagetabIndex)  in $store.state.pagetab" 
                         :key="pagetab.id">
                         <span :title="pagetab.title">{{pagetab.title}}</span>
-                        <i class="tab-close" title="关闭该标签页" @click.stop="$store.commit('pagetabAction', {action: 'delete', data: pagetab});"></i>
+                        <i 
+                            class="tab-close" 
+                            title="关闭该标签页" 
+                            @click.stop="$store.commit('pagetabAction', {action: 'delete', data: pagetab});">
+                        </i>
                     </div>
             </div>
         </div>
         <div class="pagetab-right" @click="tabToLeft"></div>
-
     </div>
 </template>
 <script>
@@ -34,7 +37,6 @@ export default {
     data(){
         return {
             tabTranslateX: 0,
-
         }
     },
     watch: {
@@ -75,12 +77,9 @@ export default {
         
     },
     mounted(){
-        this.$nextTick(()=>{
-            
-        });
+        
     },
     methods: {
-        //点击向左
         tabToLeft(e){
             e.preventDefault();
             let tabItemWidth = 120;
@@ -94,7 +93,6 @@ export default {
                 this.tabTranslateX = -canTransX;
             }
         },
-        //点击向右
         tabToRight(e){
             e.preventDefault();
             let tabItemWidth = 120;
@@ -105,8 +103,7 @@ export default {
                 this.tabTranslateX += tabItemWidth;
             }
         },
-
-
+        
     }
 
 }
@@ -128,11 +125,12 @@ export default {
         flex: none;
         width: 40px;
         height: 40px;
-        border-right: 1px solid #f6f6f6;
+        border-right: 1px solid #efefef;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 18px;
+        user-select:none
         &:hover,
         &.router-active{
             background-color: #f6f6f6;
@@ -147,16 +145,22 @@ export default {
         background-size: 24px 24px;
     }
     .pagetab-right{
-        border-left: 1px solid #f6f6f6;
+        border-left: 1px solid #efefef;
         background: url(../assets/right.png) no-repeat center center;
         background-size: 24px 24px;
+    }
+    .pagetab-left,
+    .pagetab-right{
+        &:hover{
+            background-color: #f6f6f6;
+        }
     }
     .pagetab-main{
         flex: auto;
         width: auto;
         height: 40px;
         overflow: hidden;
-        border-right: 1px solid #f6f6f6;
+        border-right: 1px solid #efefef;
         position: relative;
         .pagetab-wrap{
             position: relative;
@@ -174,7 +178,7 @@ export default {
                 line-height: 40px;
                 font-size: 14px;
                 color: #666;
-                border-right: 1px solid #f6f6f6;
+                border-right: 1px solid #efefef;
                 .tab-close{
                     position: absolute;
                     font-size: 12px;

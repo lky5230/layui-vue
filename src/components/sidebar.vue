@@ -1,128 +1,132 @@
 <template>
-    <!-- 侧边栏：最多3级 -->
-    <div>
-      <div class="sidebar" :style="{left: $store.state.showSidebarLeft? '0px': '-220px'}">
-          <div class="sidebar-title nowrap"></div>
-          <div 
-              class="sidebar-list" 
-              @click.stop
-              ref="sidebarList" 
-              @mouseleave="sidebarIndicator = false">
-              <div class="wraper">
+    <!-- 最多3级 -->
+    <div 
+      class="sidebar" 
+      :style="{
+        left: $store.state.showSidebarLeft? '0px': '-220px'
+      }">
+        <div class="sidebar-title nowrap"></div>
+        <div 
+            class="sidebar-list" 
+            @click.stop
+            ref="sidebarList">
+            <div class="wraper">
 
-              <!-- 1级 -->
-              <div 
-                  v-for="menuItem in menu" 
-                  :key="menuItem.id"
-                  @mouseover="getIndicatorTop(menuItem)">
+            <!-- 1级 -->
+            <div 
+                v-for="menuItem in menu" 
+                :key="menuItem.id">
 
-                  <a
-                    class="listItem nowrap" 
-                    @click.stop="collapsible(menuItem)"
-                    :class="{'router-active': $route.path == menuItem.url && menuItem._isleaf != 0}"
-                    :title="menuItem.title"
-                    :ref="'menuItem'+menuItem.id">
-                    <i class="fa listItem-icon" :class="[menuItem.icon? menuItem.icon: 'fa-home']"></i>
-                    {{menuItem.title}}
-                    <transition name="arrow">
-                        <i 
+                <a
+                  class="listItem nowrap" 
+                  @click.stop="collapsible(menuItem)"
+                  :class="{
+                    'router-active': $route.path == menuItem.url && menuItem._isleaf != 0
+                  }"
+                  :title="menuItem.title"
+                  :ref="'menuItem'+menuItem.id">
+                  <i 
+                    class="fa listItem-icon" 
+                    :class="[menuItem.icon? menuItem.icon: 'fa-home']">
+                  </i>
+                  {{menuItem.title}}
+                  <transition name="arrow">
+                      <i 
                         v-if="menuItem._isleaf == 0" 
                         v-show="!menuItem._showChild"
                         class="fa fa-caret-down listItem-arrow">
-                        </i>
-                    </transition>
-                    <transition name="arrow">
-                        <i 
+                      </i>
+                  </transition>
+                  <transition name="arrow">
+                      <i 
                         v-if="menuItem._isleaf == 0" 
                         v-show="menuItem._showChild"
                         class="fa fa-caret-up listItem-arrow">
-                        </i>
-                    </transition>
+                      </i>
+                  </transition>
+                </a>
+
+                <!-- 2级 -->
+                <div 
+                  v-if="menuItem._isleaf == 0" 
+                  v-for="menuItem2 in menuItem._child" 
+                  v-show="menuItem._showChild"
+                  :key="menuItem2.id">
+                  <a 
+                      class="listItem2 nowrap"
+                      @click.stop="collapsible(menuItem2)"
+                      :title="menuItem2.title"
+                      :class="{
+                        'router-active': $route.path == menuItem2.url && menuItem2._isleaf != 0
+                      }"
+                      :style="{
+                        'background-size': menuItem2._isleaf == 0? '14px': '0px'
+                      }">
+                      {{menuItem2.title}}
+                      <transition name="arrow">
+                      <i 
+                          v-if="menuItem2._isleaf == 0" 
+                          v-show="!menuItem2._showChild"
+                          class="fa fa-caret-down listItem-arrow">
+                      </i>
+                      </transition>
+                      <transition name="arrow">
+                      <i 
+                          v-if="menuItem2._isleaf == 0" 
+                          v-show="menuItem2._showChild"
+                          class="fa fa-caret-up listItem-arrow">
+                      </i>
+                      </transition>
                   </a>
 
-                  <!-- 2级 -->
+                  <!-- 3级 -->
                   <div 
-                    v-if="menuItem._isleaf == 0" 
-                    v-for="menuItem2 in menuItem._child" 
-                    v-show="menuItem._showChild"
-                    :key="menuItem2.id">
-                    <a 
-                        class="listItem2 nowrap"
-                        @click.stop="collapsible(menuItem2)"
-                        :title="menuItem2.title"
-                        :class="{'router-active': $route.path == menuItem2.url && menuItem2._isleaf != 0}"
-                        :style="{'background-size': menuItem2._isleaf == 0? '14px': '0px'}">
-                        {{menuItem2.title}}
-                        <transition name="arrow">
-                        <i 
-                            v-if="menuItem2._isleaf == 0" 
-                            v-show="!menuItem2._showChild"
-                            class="fa fa-caret-down listItem-arrow">
-                        </i>
-                        </transition>
-                        <transition name="arrow">
-                        <i 
-                            v-if="menuItem2._isleaf == 0" 
-                            v-show="menuItem2._showChild"
-                            class="fa fa-caret-up listItem-arrow">
-                        </i>
-                        </transition>
-                    </a>
-
-                    <!-- 3级 -->
-                    <div 
-                        v-if="menuItem2._isleaf == 0" 
-                        v-for="menuItem3 in menuItem2._child" 
-                        v-show="menuItem2._showChild"
-                        :key="menuItem3.id">
-                        <a 
-                          class="listItem3 nowrap"
-                          @click.stop="collapsible(menuItem3)"
-                          :title="menuItem3.title"
-                          :class="{'router-active': $route.path == menuItem3.url && menuItem3._isleaf != 0}"
-                          :style="{'background-size': menuItem3._isleaf == 0? '14px': '0px'}">
-                          {{menuItem3.title}}
-                        </a>
-                    </div>
-
+                      v-if="menuItem2._isleaf == 0" 
+                      v-for="menuItem3 in menuItem2._child" 
+                      v-show="menuItem2._showChild"
+                      :key="menuItem3.id">
+                      <a 
+                        class="listItem3 nowrap"
+                        @click.stop="collapsible(menuItem3)"
+                        :title="menuItem3.title"
+                        :class="{
+                          'router-active': $route.path == menuItem3.url && menuItem3._isleaf != 0
+                        }"
+                        :style="{
+                          'background-size': menuItem3._isleaf == 0? '14px': '0px'
+                        }">
+                        {{menuItem3.title}}
+                      </a>
                   </div>
 
-              </div>
-
-              </div>
-
-              <transition name="indicator">
-                <div 
-                  class="indicator" 
-                  v-show="sidebarIndicator" 
-                  :style="{
-                  top: sidebarIndicatorTop+'px', 
-                  height: sidebarIndicatorHeight+'px'
-                  }">
                 </div>
-              </transition>
 
-          </div>
-      </div>
-      <div @click.stop="$store.commit('changeSidebarLeft', false)" class="mask" :style="{transform: $store.state.showSidebarLeft? 'scale(1)': 'scale(0)'}"></div>
+            </div>
+
+            </div>
+
+        </div>
+        <div 
+          @click.stop="$store.commit('changeSidebarLeft', false)" 
+          class="mask" 
+          :style="{
+            transform: $store.state.showSidebarLeft? 'scale(1)': 'scale(0)',
+            right:  $store.state.showSidebarLeft? '0px': '-100%',
+          }">
+        </div>
     </div>
 </template>
 
 <script>
+const menuUrl = '/menu.json'
 import BS from 'better-scroll'
 
 export default {
   name: 'sidebar',
   data(){
     return {
-      // 侧边栏滚动实例
       sidebarScroll: '',
-      //整理菜单
       menu: [],
-      //菜单项指示条-是否显示
-      sidebarIndicator: false,
-      sidebarIndicatorTop: 0,
-      sidebarIndicatorHeight: 0,
 
     }
   },
@@ -137,8 +141,12 @@ export default {
       });
     })
   },
+  watch: {
+    '$route'(newVal, oldVal){
+      this.initPageTab(newVal);
+    }
+  },
   methods: {
-    //侧边栏滚动条实例
     BScroll(){
       this.sidebarScroll = new BS(this.$refs.sidebarList, {
         scrollbar: {
@@ -149,10 +157,8 @@ export default {
         mouseWheel: true,
       });
     },
-
-    //菜单目录
     getMenu(cb){
-      this.$http.get('/menu.json').then(res=>{
+      this.$http.get(menuUrl).then(res=>{
         let menu = this.$utils.cleanData(res.data);
         (function showExc(arr){
           for(let i=0; i<arr.length; i++){
@@ -170,95 +176,73 @@ export default {
         console.error(err);
       });
     },
-
-    //点击菜单项
     collapsible(menuItem){
-      //1、跳转url 
+      //跳转
       if(menuItem._isleaf != 0){
         this.$store.commit('pagetabAction', {action: 'insert', data: menuItem});
         this.$router.push(menuItem.url);
         this.$store.commit('changeSidebarLeft', false);
         return ;
       };
-      //2、展开伸缩
+      //伸缩
       menuItem._showChild = !menuItem._showChild;
       this.$nextTick(()=>{
         this.sidebarScroll.refresh();
       })
     },
-
-    //计算菜单指示条top
-    getIndicatorTop(menuItem){
-      let sidebarList = this.$refs.sidebarList;
-      let _menuItem = this.$refs['menuItem'+menuItem.id];
-      if(_menuItem instanceof Array) _menuItem = _menuItem[0];
-      let s = sidebarList.getBoundingClientRect();
-      let m = _menuItem.getBoundingClientRect();
-      this.sidebarIndicatorHeight = m.height;
-      this.sidebarIndicatorTop = m.y - s.y;
-      this.sidebarIndicator = true;
-    },
-
-    //初始化 pagetab、菜单展开等
-    initPageTab(){
-      let path = this.$router.currentRoute.path;
+    initPageTab(data){
+      let path = data? data.path: this.$router.currentRoute.path;
       let menu = this.$utils.jsonClone(this.menu);
       let vm = this;
       let curPid = '';
-      //1、pagetab 插入当前标签页
       (function exec(menu){
         for(let i=0; i<menu.length; i++){
           if(menu[i]._isleaf != 0){
             if(path == menu[i].url){
               curPid = menu[i].parentid == 0? 'FIRST': menu[i].parentid;
-              return vm.$store.commit('pagetabAction', {action: 'insert', data: menu[i]});
+              return data? null: vm.$store.commit('pagetabAction', {action: 'insert', data: menu[i]});
             }
           }else{
             exec(menu[i]._child);
           }
         }
       }(menu));
-      
       if(curPid == 'FIRST' || curPid == '') return this.menu = menu;
-
-      //2、侧边栏展开当前标签页的所有父层标签
       let willFindPid = curPid;
       let findComplate = false;
-      function exec2(menu){
-        for(let i=0; i<menu.length; i++){
-          if(menu[i].id == willFindPid){
-            menu[i]._showChild = true;
-            if(menu[i].parentid == 0){
-              return findComplate = true;
+      while(!findComplate){
+        (function exec2(menu){
+          for(let i=0; i<menu.length; i++){
+            if(menu[i].id == willFindPid){
+              menu[i]._showChild = true;
+              if(menu[i].parentid == 0){
+                return findComplate = true;
+              }else{
+                return willFindPid = menu[i].parentid;
+              }
             }else{
-              return willFindPid = menu[i].parentid;
-            }
-          }else{
-            if(menu[i]._isleaf == 0){
-              exec2(menu[i]._child);
+              if(menu[i]._isleaf == 0){
+                exec2(menu[i]._child);
+              }
             }
           }
-        }
-      }
-      while(!findComplate){
-        exec2(menu);
+        }(menu))
       }
       this.menu = menu;
+      this.$nextTick(()=>{
+        data? this.sidebarScroll.refresh(): void(0);
+      })
     },
-    
 
   },
 
-
 }
 </script>
-
-
 <style lang="less">
 @indicatorColor: #4caf50;
-@sidebarActiveBg: #f2f2f2;
+@sidebarActiveBg: #343742;
 @sidebarMainBg: #20222a;
-@sidebarChildBg: #070a15;
+@sidebarChildBg: #20222a;
 .sidebar{
   flex: none;
   width: 220px;
@@ -273,8 +257,8 @@ export default {
     font-size: 16px;
     padding-left: 20px;
     padding-right: 20px;
-    background: url(../assets/title.jpg) no-repeat left top;
-    background-size: 100% 100%;
+    background: url(../assets/title.png) no-repeat center center @sidebarMainBg;
+    background-size: contain;
     color: #fff;
     text-align: center;
   }
@@ -288,8 +272,7 @@ export default {
       position: relative;
       .router-active{
         background-color: @sidebarActiveBg !important;
-        color: @sidebarMainBg !important;
-        font-weight: bold !important;
+        color: #00a8ff !important;
       }
       .listItem, .listItem2, .listItem3{
         position: relative;
@@ -342,22 +325,12 @@ export default {
       }
           
     }
-    .indicator{
-      position: absolute;
-      left: 1px;
-      width: 3px;
-      background: @indicatorColor;
-      transition: all .2s;
-      transform-origin: center center;
-      transform: scaleY(0.7);
-    }
   }
 
   .bscroll-indicator{
     border: none !important;
     background: rgba(120, 120, 120, .5) !important;
   }
-
 
   .arrow-enter-active,
   .arrow-leave-active {
@@ -367,30 +340,20 @@ export default {
   .arrow-leave-to{
     opacity: 0;
   }
-  .indicator-enter-active,
-  .indicator-leave-active {
-    transition: all .4s ease;
-  }
-  .indicator-enter, 
-  .indicator-leave-to{
-    transform: scaleY(0);
-    opacity: 0;
-  }
 }
 @media screen and (max-width: 768px) {
   .sidebar{
     position: fixed;
-    z-index: 1000;
+    z-index: 3000;
     top: 0px;
   }
   .mask{
     position: fixed;
     z-index: 999;
     top: 0px;
-    left: 0px;
-    width: 100%;
+    width: calc(100% - 220px);
     height: 100%;
-    background: rgba(0, 0, 0, .35);
+    background: transparent;
   }
 }
 @media screen and (min-width: 768px) {

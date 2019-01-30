@@ -1,10 +1,8 @@
 import Vue from 'vue'
 Vue.prototype.$utils = {
-
-  // 添加cookie
   addCookie: function(objName, objValue, objHours){
     var str = objName + "=" + escape(objValue);
-    if (objHours > 0) {//为0时不设定过期时间，浏览器关闭时cookie自动消失   
+    if (objHours > 0) {   
         var date = new Date();
         var ms = objHours * 3600 * 1000;
         date.setTime(date.getTime() + ms);
@@ -12,24 +10,18 @@ Vue.prototype.$utils = {
     }
     document.cookie = str;
   },
-
-  // 获取指定名称的cookie的值
   getCookie: function(objName){
     var arrStr = document.cookie.split("; ");
     for (var i = 0; i < arrStr.length; i++) {
-        var temp = arrStr[i].split("=");
-        if (temp[0] == objName) return unescape(temp[1]);
+      var temp = arrStr[i].split("=");
+      if (temp[0] == objName) return unescape(temp[1]);
     }
   },
-
-  // 为了删除指定名称的cookie，可以将其过期时间设定为一个过去的时间
   delCookie: function(name){
     var date = new Date();
     date.setTime(date.getTime() - 10000);
     document.cookie = name + "=a; expires=" + date.toGMTString();
   }, 
-  
-  //给url字符串，添加和覆盖，查询字符串
   addUrlQuery: function(originUrl, queryObj){
     function toQueryString(qObj) {
       let str = '';
@@ -64,8 +56,6 @@ Vue.prototype.$utils = {
       };
     };
   },
-
-  //深拷贝
   deepClone: function(data) {
     let t = type(data), o, i, ni;
     if(t === 'array') {
@@ -103,30 +93,16 @@ Vue.prototype.$utils = {
       return map[toString.call(obj)];
     }
   },
-
-  //json转换拷贝
   jsonClone: function(obj){
     return JSON.parse(JSON.stringify(obj))
   },
-
   /*
-  *  [
-  *   {id: 1, parentid: 0},
-  *   {id: 2, parentid: 0},
-  *   {id: 12, parentid: 1},
-  *   {id: 123, parentid: 12}
+  *  data = [
+  *   {id: 1, parentid: 0, ...},
+  *   {id: 2, parentid: 0, ...},
+  *   {id: 3, parentid: 1, ...},
+  *   {id: 4, parentid: 3, ...}
   *  ]
-  *   ===>【转化后添加了字段： _isleaf（0：有子数组，1：无子数组）, _level（层级）, _child（子数组）】
-  *   ===>【这里只演示转化后，添加了_child字段】
-  *  [
-  *   {id: 1, parentid: 0, _child: [
-  *     {id: 12, parentid: 1, _child: [
-  *       {id: 123, parentid: 12, _child: []}
-  *      ]}
-  *   ]},
-  *   {id: 2, parentid: 0, _child: []},
-  *  ]
-  *  ( 参数1：原始一维数组, 参数2：id及parentid字段名称 )
   */
   cleanData: function(data, {id = 'id', parentid = 'parentid'} = {}){
     let vm = this;
@@ -136,11 +112,7 @@ Vue.prototype.$utils = {
       let clean = [];
       if (data2.length == 0) return [];
       
-      /*
-      * 增加 _isleaf、_level
-      */
       function convert(data){
-        //增加 _isleaf
         for(let i=0; i<data.length; i++){
           for(let j=0; j<data.length; j++){
             if(data[i][id] == data[j][parentid]){
@@ -152,7 +124,6 @@ Vue.prototype.$utils = {
             data[i]._isleaf = 1;
           }
         };
-        //增加 _level
         for(let i=0; i<data.length; i++){
           if(data[i][parentid] != 0){
             getLv(data[i], 1, data[i][parentid]);
@@ -160,7 +131,6 @@ Vue.prototype.$utils = {
             data[i]._level = 0;
           }
         };
-
         function getLv(item, lv, pid){
           for(let j=0; j<data.length; j++){
             if(data[j][id] == pid){
@@ -175,12 +145,9 @@ Vue.prototype.$utils = {
             }
           };
         };
-
         return data;
       };
-
       data2 = convert(data2);
-      
       data2.forEach(item => {
         if (item._level > levelLength) {
           levelLength = item._level;
@@ -218,8 +185,6 @@ Vue.prototype.$utils = {
     let d = cleanData(data);
     return d;
   },
-
-  //扁平化cleanData，可用于搜索菜单
   flattenedCleanData(menu, name = 'title'){
     let arr = [],
       temp = [], 
@@ -237,15 +202,11 @@ Vue.prototype.$utils = {
         }
       }
     };
-  }
-  
-
+  },
 
 }
 
-/*
- * 日期实例的格式化，参数：fmt = yyyy-MM-dd hh:mm:ss，或者 fmt = yyyy-MM-dd，等等
-*/
+// yyyy-MM-dd hh:mm:ss
 Date.prototype.format = function (fmt) {
   if(this.toString() == 'Invalid Date'){
     return ''
@@ -264,6 +225,4 @@ Date.prototype.format = function (fmt) {
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
   return fmt;
 }
-
-
 

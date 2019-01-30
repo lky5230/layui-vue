@@ -9,6 +9,9 @@
             </div>
         </div>
         <div class="top-wrap fr">
+            <div class="item fl" title="通知">
+                <i class="bell-icon"></i>
+            </div>
             <div class="item tag-item fl" title="笔记" @click.stop.prevent="ixcTagShow">
                 <i class="tag-icon"></i>
                 <div class="tag-content" @click.stop v-show="tagShow">
@@ -63,7 +66,7 @@ export default {
 .top{
     width: 100%;
     height: 50px;
-    border-bottom: 1px solid #f6f6f6;
+    border-bottom: 1px solid #efefef;
     background: #fff;
     .top-wrap{
         height: 100%;
@@ -169,6 +172,7 @@ export default {
             }
         }
         .menu-icon,
+        .bell-icon,
         .tag-icon,
         .refresh-icon{
             width: 18px;
@@ -178,6 +182,10 @@ export default {
         
         .menu-icon{
             background: url(../assets/menu.png) no-repeat center center;
+            background-size: contain;
+        }
+        .bell-icon{
+            background: url(../assets/bell.png) no-repeat center center;
             background-size: contain;
         }
         .refresh-icon{

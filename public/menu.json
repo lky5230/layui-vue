@@ -1,13 +1,13 @@
 [
     {
         "id": 1,
-        "title": "主页1",
+        "title": "图标",
         "parentid": 0,
-        "url": "/",
+        "url": "/index3",
         "icon": "fa-gavel"
     },{
         "id": 2,
-        "title": "主页2",
+        "title": "表格",
         "parentid": 0,
         "url": "/index2",
         "icon": "fa-magnet"
@@ -17,16 +17,6 @@
         "parentid": 0,
         "url": "/",
         "icon": "fa-tty"
-    },{
-        "id": 4,
-        "title": "副业1",
-        "parentid": 1,
-        "url": "/"
-    },{
-        "id": 5,
-        "title": "副业2",
-        "parentid": 1,
-        "url": "/3"
     },{
         "id": 6,
         "title": "三级页1",
