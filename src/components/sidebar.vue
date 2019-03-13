@@ -243,6 +243,16 @@ export default {
 @sidebarActiveBg: #343742;
 @sidebarMainBg: #20222a;
 @sidebarChildBg: #20222a;
+@keyframes a{
+	from{
+		transform: scaleY(0);
+		opacity: 0;
+	}
+	to{
+		transform: scaleY(1);
+		opacity: 1;
+	}
+}
 .sidebar{
   flex: none;
   width: 220px;
@@ -273,6 +283,19 @@ export default {
       .router-active{
         background-color: @sidebarActiveBg !important;
         color: #00a8ff !important;
+		&:after{
+			position: absolute;
+			right: 4px;
+			top: 4px;
+			content: ' ';
+			width: 4px;
+			border-radius: 2px;
+			transfrom-origin: center;
+			height: calc(100% - 8px);
+			animation: a .3s;
+			animation-fill-mode: forwards;
+			background: #00a8ff;
+		}
       }
       .listItem, .listItem2, .listItem3{
         position: relative;
