@@ -104,86 +104,34 @@ Vue.prototype.$utils = {
   *   {id: 4, parentid: 3, ...}
   *  ]
   */
-  cleanData: function(data, {id = 'id', parentid = 'parentid'} = {}){
-    let vm = this;
-    function cleanData(data) {
-      let data2 = vm.jsonClone(data);
-      let levelLength = 0;
-      let clean = [];
-      if (data2.length == 0) return [];
-      
-      function convert(data){
+  cleanData: function(data, {id = "id", parentid = "parentid"} = {}){
+    (function dd(data){
         for(let i=0; i<data.length; i++){
-          for(let j=0; j<data.length; j++){
-            if(data[i][id] == data[j][parentid]){
-              data[i]._isleaf = 0;
-              break;
+            for(let j=0; j<data.length; j++){
+                if(data[i][parentid] == data[j][id]){
+                    if(data[j]._child == undefined) data[j]._child = [];
+                    data[j]._child.push(data[i]);
+                    data.splice(i, 1);
+                    dd(data);
+                }else{
+                    if(data[j]._child != undefined) dd(data[j]._child);
+                }
             }
-          }
-          if(data[i]._isleaf == undefined){
-            data[i]._isleaf = 1;
-          }
-        };
+        }
+    })(data);
+    (function setAttr(data, level){
         for(let i=0; i<data.length; i++){
-          if(data[i][parentid] != 0){
-            getLv(data[i], 1, data[i][parentid]);
-          }else{
-            data[i]._level = 0;
-          }
-        };
-        function getLv(item, lv, pid){
-          for(let j=0; j<data.length; j++){
-            if(data[j][id] == pid){
-              if(data[j][parentid] == 0){
-                item._level = lv;
-                return ;
-              }else{
-                lv++;
-                getLv(item, lv, data[j][parentid]);
-              }
-              return ;
+            data[i]._level = level;
+            if(data[i]._child == undefined){
+                data[i]._child = [];
+                data[i]._isleaf = 1;
+            }else{
+                data[i]._isleaf = 0;
+                setAttr(data[i]._child, level + 1);
             }
-          };
-        };
-        return data;
-      };
-      data2 = convert(data2);
-      data2.forEach(item => {
-        if (item._level > levelLength) {
-          levelLength = item._level;
         }
-      });
-      data2 = data2.map(item => {
-        item._child = [];
-        return item;
-      });
-      for (let i = 0; i <= levelLength; i++) {
-        clean[i] = [];
-        data2.forEach(item => {
-          if (item._level == i) {
-            clean[i].push(item);
-          }
-        });
-      }
-      for (let i = clean.length - 1; i >= 0; i--) {
-        for (let j = 0; j < clean[i].length; j++) {
-          addToChildren(clean[i][j], i);
-        }
-      }
-      return clean[0];
-      function addToChildren(obj, index) {
-        if (index != 0) {
-          let _i = index - 1;
-          for (let i = 0; i < clean[_i].length; i++) {
-            if (clean[_i][i][id] == obj[parentid]) {
-              clean[_i][i]._child.push(obj);
-            }
-          }
-        }
-      }
-    };
-    let d = cleanData(data);
-    return d;
+    })(data, 0);
+    return data;
   },
   flattenedCleanData(menu, name = 'title'){
     let arr = [],
