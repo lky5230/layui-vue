@@ -104,34 +104,39 @@ Vue.prototype.$utils = {
   *   {id: 4, parentid: 3, ...}
   *  ]
   */
-  cleanData: function(data, {id = "id", parentid = "parentid"} = {}){
-    (function dd(data){
-        for(let i=0; i<data.length; i++){
-            for(let j=0; j<data.length; j++){
-                if(data[i][parentid] == data[j][id]){
-                    if(data[j]._child == undefined) data[j]._child = [];
-                    data[j]._child.push(data[i]);
-                    data.splice(i, 1);
-                    dd(data);
-                }else{
-                    if(data[j]._child != undefined) dd(data[j]._child);
-                }
+  cleanData: function(data, { id = 'id', pid = 'parentid' } = {}){
+    var res = []
+    var temp = {}
+    for (var i = 0; i < data.length; i++) {
+        temp[data[i][id]] = data[i]
+    }
+    for (var k = 0; k < data.length; k++) {
+        if (temp[data[k][pid]] && data[k][id] !== data[k][pid]) {
+            if (!temp[data[k][pid]]['_child']) {
+                temp[data[k][pid]]['_child'] = []
             }
+            if (!temp[data[k][pid]]['_level']) {
+                temp[data[k][pid]]['_level'] = 1
+            }
+            data[k]['_level'] = temp[data[k][pid]]._level + 1
+            temp[data[k][pid]]['_child'].push(data[k])
+        } else {
+            res.push(data[k])
         }
-    })(data);
-    (function setAttr(data, level){
-        for(let i=0; i<data.length; i++){
+    }
+    (function setAttr(data, level) {
+        for (let i = 0; i < data.length; i++) {
             data[i]._level = level;
-            if(data[i]._child == undefined){
+            if (data[i]._child == undefined) {
                 data[i]._child = [];
                 data[i]._isleaf = 1;
-            }else{
+            } else {
                 data[i]._isleaf = 0;
                 setAttr(data[i]._child, level + 1);
             }
         }
-    })(data, 0);
-    return data;
+    })(res, 0);
+    return res
   },
   flattenedCleanData(menu, name = 'title'){
     let arr = [],
